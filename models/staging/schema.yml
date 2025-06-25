@@ -1,0 +1,112 @@
+version: 2
+
+models:
+
+  - name: stg_customers
+    description: "Cleaned customer dimension data"
+    columns:
+      - name: customer_id
+        description: "Unique identifier for each customer"
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_products
+    description: "Product data with category information"
+    columns:
+      - name: product_id
+        description: "Unique product identifier"
+        tests:
+          - not_null
+          - unique
+      - name: product_category_name
+        description: "Original product category name"
+      - name: product_name_length
+        description: "Length of product name"
+
+  - name: stg_geolocation
+    description: "Geolocation data linked to ZIP code prefix"
+    columns:
+      - name: zip_code_prefix
+        description: "ZIP code prefix used for location mapping"
+        tests:
+          - not_null
+      - name: latitude
+        description: "Latitude of the ZIP code area"
+      - name: longitude
+        description: "Longitude of the ZIP code area"
+      - name: city
+        description: "City of the ZIP code area"
+      - name: state
+        description: "State abbreviation"
+
+  - name: stg_order_items
+    description: "Cleaned order item data"
+    columns:
+      - name: order_id
+        description: "ID of the order this item belongs to"
+        tests:
+          - not_null
+      - name: product_id
+        description: "Product ID of the item"
+        tests:
+          - not_null
+      - name: seller_id
+        description: "Seller who provided this item"
+        tests:
+          - not_null
+      - name: price
+        description: "Price paid for the item"
+      - name: freight_value
+        description: "Shipping fee for the item"
+
+  - name: stg_order_payments
+    description: "Payments associated with each order"
+    columns:
+      - name: order_id
+        description: "Order ID for the payment"
+        tests:
+          - not_null
+      - name: payment_type
+        description: "Method of payment (credit, debit, etc.)"
+      - name: payment_value
+        description: "Amount paid"
+
+  - name: stg_order_reviews
+    description: "Customer reviews for orders"
+    columns:
+      - name: order_id
+        description: "Order ID reviewed"
+        tests:
+          - not_null
+      - name: review_score
+        description: "Numeric score from 1 to 5"
+      - name: review_comment_title
+        description: "Title of the customer review"
+      - name: review_comment_message
+        description: "Body of the review"
+
+  - name: stg_product_category_translation
+    description: "Translation of product categories from Portuguese to English"
+    columns:
+      - name: product_category_name
+        description: "Original category name in Portuguese"
+        tests:
+          - not_null
+      - name: product_category_name_english
+        description: "Translated category name"
+
+  - name: stg_sellers
+    description: "Seller data including location and ID"
+    columns:
+      - name: seller_id
+        description: "Unique identifier of seller"
+        tests:
+          - not_null
+          - unique
+      - name: seller_zip_code_prefix
+        description: "ZIP code prefix for the seller's location"
+      - name: seller_city
+        description: "City where seller is located"
+      - name: seller_state
+        description: "State where seller is located"

@@ -46,10 +46,10 @@ select
     min(order_date) as first_order_date,
     max(order_date) as last_order_date,
 
-    coalesce(city, 'Unknown') as city,
-    coalesce(state, 'Unknown') as state,
-    latitude,
-    longitude,
+    coalesce(MAX(city), 'Unknown') as city,
+    coalesce(MAX(state), 'Unknown') as state,
+    AVG(latitude) as latitude,
+    AVG(longitude) as longitude,
 
     case
         when sum(total_payment) >= 1000 then 'High Value'
@@ -58,5 +58,4 @@ select
     end as customer_segment
 
 from orders_with_geo
-group by
-    customer_id, city, state, latitude, longitude
+group by customer_id

@@ -1,0 +1,93 @@
+version: 2
+
+models:
+
+  - name: fact_orders
+    description: "Fact table at the order level combining items, payments, and reviews"
+    columns:
+      - name: order_id
+        description: "Unique identifier for the order"
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_id
+        description: "Customer who placed the order"
+        tests:
+          - not_null
+
+      - name: order_status
+        description: "Current status of the order (delivered, canceled, etc.)"
+
+      - name: order_date
+        description: "Timestamp when the order was placed"
+
+      - name: order_estimated_ts
+        description: "Estimated delivery date for the order"
+
+      - name: total_price
+        description: "Sum of item prices in the order"
+
+      - name: total_freight
+        description: "Shipping cost for the order"
+
+      - name: num_items
+        description: "Number of items in the order"
+
+      - name: total_payment
+        description: "Total amount paid for the order"
+
+      - name: avg_review_score
+        description: "Average customer review score for the order"
+
+      - name: total_order_cost
+        description: "Price + Freight for the order"
+
+      - name: payment_difference
+        description: "Difference between payment and price (may indicate discount or overcharge)"
+
+  - name: fact_customers
+    description: "Customer-level fact table summarizing behavior and location"
+    columns:
+      - name: customer_id
+        description: "Unique customer identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: total_orders
+        description: "Total number of distinct orders"
+        tests:
+          - not_null
+
+      - name: total_spent
+        description: "Total money spent by the customer"
+        tests:
+          - not_null
+
+      - name: avg_order_value
+        description: "Average value per order"
+
+      - name: avg_review_score
+        description: "Average of all review scores for the customer"
+
+      - name: first_order_date
+        description: "Date of the customer's first order"
+
+      - name: last_order_date
+        description: "Date of the most recent order"
+
+      - name: city
+        description: "City from geolocation data"
+
+      - name: state
+        description: "State from geolocation data"
+
+      - name: latitude
+        description: "Average latitude of customer's location"
+
+      - name: longitude
+        description: "Average longitude of customer's location"
+
+      - name: customer_segment
+        description: "Value-based segmentation of the customer (High/Medium/Low)"

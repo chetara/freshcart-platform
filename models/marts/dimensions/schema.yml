@@ -1,0 +1,110 @@
+version: 2
+
+models:
+
+  - name: dim_customers
+    description: "Customer dimension table with customer ID, unique ID, and location"
+    columns:
+      - name: customer_id
+        description: "Primary customer identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: customer_unique_id
+        description: "External anonymous unique customer identifier"
+
+      - name: zip_code
+        description: "Customer ZIP code"
+
+      - name: city
+        description: "Customer city"
+
+      - name: state
+        description: "Customer state"
+
+  - name: dim_geolocation
+    description: "Geolocation dimension by ZIP code and city, with averaged lat/lon"
+    columns:
+      - name: zip_code_prefix
+        description: "ZIP code prefix"
+        tests:
+          - not_null
+
+      - name: city
+        description: "City name"
+
+      - name: state
+        description: "State abbreviation"
+
+      - name: latitude
+        description: "Average latitude of the ZIP area"
+
+      - name: longitude
+        description: "Average longitude of the ZIP area"
+
+  - name: dim_payments
+    description: "Payment method dimension with readable labels and categories"
+    columns:
+      - name: payment_type
+        description: "Raw payment type string from source data"
+        tests:
+          - not_null
+          - unique
+
+      - name: payment_label
+        description: "Human-readable payment method label (e.g., 'Credit Card')"
+
+      - name: payment_category
+        description: "High-level payment category (Card, Store Credit, etc.)"
+
+  - name: dim_products
+    description: "Product-level attributes and metadata"
+    columns:
+      - name: product_id
+        description: "Primary product identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: category_name
+        description: "Product category name"
+
+      - name: name_length
+        description: "Character length of the product name"
+
+      - name: description_length
+        description: "Character length of the product description"
+
+      - name: photos_qty
+        description: "Number of product photos"
+
+      - name: weight_g
+        description: "Product weight in grams"
+
+      - name: length_cm
+        description: "Product package length in centimeters"
+
+      - name: height_cm
+        description: "Product package height in centimeters"
+
+      - name: width_cm
+        description: "Product package width in centimeters"
+
+  - name: dim_sellers
+    description: "Seller dimension table with location and ZIP code"
+    columns:
+      - name: seller_id
+        description: "Primary seller identifier"
+        tests:
+          - not_null
+          - unique
+
+      - name: zip_code
+        description: "Seller ZIP code"
+
+      - name: city
+        description: "Seller city"
+
+      - name: state
+        description: "Seller state"
