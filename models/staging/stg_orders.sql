@@ -15,3 +15,6 @@ select
     cast(order_estimated_delivery_date as timestamp) as order_estimated_ts
 
 from source
+
+-- Trigger CI check
+
